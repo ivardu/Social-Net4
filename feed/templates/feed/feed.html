@@ -1,0 +1,26 @@
+{% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+<!-- Feed Page body -->
+<div class="container mx-auto">
+	<!-- Feed Post Form Container -->
+	<div class="container shadow-lg border rounded mt-2 p-2 w-50">
+		<form method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			{{feed_form|crispy}}
+			<input class="btn btn-primary" type="submit" value="Post" name="Post">
+		</form>
+	</div>
+	<!-- Feed List display -->
+	<div class="container mx-auto mt-2 shadow-lg w-50">
+		{% for post in feed_list %}
+		<div class="container">
+			{{post.post}}
+		</div>
+		<div class="container">
+			<img class="img-thumbnail" src="{{post.image.url}}">
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

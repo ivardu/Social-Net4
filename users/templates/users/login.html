@@ -1,8 +1,18 @@
+{% extends 'users/base.html' %}
 {% load crispy_forms_tags %}
-<div class="container">
+{% block body %}
+<!-- Login Form Container -->
+<div class="container w-25 mx-auto shadow-lg mt-2 p-2 border rounded">
+	<!-- Login Form  -->
 	<form method="post" >
 		{% csrf_token %}
+		<div align="center">
+			<h2><small>Login</small></h2>
+		</div>
+		<!-- Login Form -->
 		{{form|crispy}}
-		<input type="submit" name="login" value="login">
+		<!-- Login Button -->
+		<input class="btn btn-primary" type="submit" name="login" value="login">
 	</form>
 </div>
+{% endblock body %}
