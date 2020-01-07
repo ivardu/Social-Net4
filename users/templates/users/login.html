@@ -1,0 +1,8 @@
+{% load crispy_forms_tags %}
+<div class="container">
+	<form method="post" >
+		{% csrf_token %}
+		{{form|crispy}}
+		<input type="submit" name="login" value="login">
+	</form>
+</div>
