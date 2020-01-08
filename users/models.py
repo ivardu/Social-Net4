@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from PIL import Image
 
 
 # Create your models here.
@@ -26,8 +27,16 @@ def profile_image(instance, filename):
 
 # Profile Image Model
 class Profile(models.Model):
-	profile_img = models.ImageField(default='default.png', upload_to=profile_image)
+	profile_img = models.ImageField(default='default.png/', upload_to=profile_image)
 	user = models.OneToOneField(SnetUser, on_delete=models.CASCADE) 
 
 	def __str__(self):
 		return f'{self.user.username} Profile'
+
+	def save(self, *args, **kwargs):
+		super().save(*args,**kwargs)
+		img = Image.open(self.profile_img.path)
+		if img.width > 400 and img.height >400:
+			output = (200,200)
+			img.thumbnail(output)
+			img.save(self.profile_img.path)

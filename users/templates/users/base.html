@@ -19,9 +19,9 @@
 			<div class="navbar navbar-dark bg-dark pb-0 pt-0">
 				<!-- Left Nav Bar  -->
 				<div class="navbar navbar-brand">
-					<a class="navbar-brand" href="#"><h3>Social Net4</h3></a>
-					<a class="navbar-brand" href="{% url 'feed:home'%}"><h4>Home</h4></a>
-					<a class="navbar-brand" href="{% url 'feed:feed'%}"><h4>Feed</h4></a>
+					<a class="navbar-brand" href="{% url 'feed:home' %}"><h3>Social Net4</h3></a>
+					<a class="navbar-brand" href="{% url 'feed:home' %}"><h4>Home</h4></a>
+					<a class="navbar-brand" href="{% url 'feed:feed' %}"><h4>Feed</h4></a>
 				</div>
 				<!-- Middle -->
 				<div></div>
@@ -32,7 +32,7 @@
 						<a class="text-white" href="{% url 'profile' %}">Profile</a>
 						<a class="btn btn-danger" href="{% url 'logout' %}">Logout</a>
 					{% else %}
-						<a class="btn btn-primary" href=""><span class="glyphicon glyphicon-log-in"></span>Login</a>
+						<a class="btn btn-primary" href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span>Login</a>
 						<a class="btn btn-success" href="{% url 'signup' %}">SignUp</a>
 					{% endif %}
 				</div>

@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, reverse
+from django.http import HttpResponseRedirect
 from users.forms import UserUpdateForm, UserRegForm, ProfileForm
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
@@ -20,11 +21,9 @@ def profile(request):
 	if request.method == 'POST':
 		pform = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
 		uform = UserUpdateForm(request.POST, instance=request.user)
-
 		if pform.is_valid() and uform.is_valid():
 			pform.save()
 			uform.save()
-
 			return HttpResponseRedirect(reverse('profile'))
 	else:
 		pform = ProfileForm(instance=request.user.profile)

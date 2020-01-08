@@ -37,6 +37,6 @@ class UserUpdateForm(forms.ModelForm):
 
 	class Meta:
 		model = SnetUser
-		fields = ['email']
+		fields = ['first_name','last_name','email','dob']
 
 # class PasswordUpdateForm(forms.models)
