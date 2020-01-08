@@ -20,20 +20,34 @@
 				<!-- Left Nav Bar  -->
 				<div class="navbar navbar-brand">
 					<a class="navbar-brand" href="{% url 'feed:home' %}"><h3>Social Net4</h3></a>
-					<a class="navbar-brand" href="{% url 'feed:home' %}"><h4>Home</h4></a>
-					<a class="navbar-brand" href="{% url 'feed:feed' %}"><h4>Feed</h4></a>
+					<a class="navbar-brand" href="{% url 'feed:home' %}"><h4 class="small">Home</h4></a>
+					<a class="navbar-brand" href="{% url 'feed:feed' %}"><h4 class="small">Feed</h4></a>
 				</div>
 				<!-- Middle -->
 				<div></div>
 				<!-- Right Nav Bar -->
-				<div class="navbar-right">
+				<div class="nav navbar-nav navbar-right">
 					{% if user.is_authenticated %}
-						<img src=""><small class="text-white">{{user.first_name}} {{user.last_name}}</small>
-						<a class="text-white" href="{% url 'profile' %}">Profile</a>
-						<a class="btn btn-danger" href="{% url 'logout' %}">Logout</a>
+						<div class="row">
+							<div class="col-md-3 pr-0">
+								<a href="{% url 'profile' %}"><img class="img-thumbnail border rounded-circle" src="{{user.profile.profile_img.url}}" width="45" height="45"></a>
+							</div>
+							<div class="col-md-3 mt-1">
+								<a class="text-white small" href="{% url 'profile' %}">{{user.first_name}}</a>
+							</div>
+							<div class="col-md-3 mt-1">
+								<a class="btn btn-sm btn-danger" href="{% url 'logout' %}">Logout</a>
+							</div>
+						</div>
 					{% else %}
-						<a class="btn btn-primary" href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span>Login</a>
-						<a class="btn btn-success" href="{% url 'signup' %}">SignUp</a>
+					<div class="row">
+						<div class="col-md-5">
+							<a class="btn btn-sm btn-primary" href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span>Login</a>
+						</div>
+						<div class="col-md-5">
+							<a class="btn btn-sm btn-success" href="{% url 'signup' %}">SignUp</a>
+						</div>
+					</div>
 					{% endif %}
 				</div>
 				

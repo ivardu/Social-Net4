@@ -1,8 +1,10 @@
 from django.shortcuts import render, reverse
 from django.http import HttpResponseRedirect
 from users.forms import UserUpdateForm, UserRegForm, ProfileForm
-from django.views.generic.edit import FormView
+from users.models import SnetUser
+from django.views.generic.edit import FormView, CreateView
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -15,7 +17,7 @@ class UserRegView(FormView):
 		form.save()
 		return super().form_valid(form)
 
-
+@login_required
 def profile(request):
 
 	if request.method == 'POST':
@@ -30,3 +32,10 @@ def profile(request):
 		uform = UserUpdateForm(instance=request.user)
 
 	return render(request, 'users/profile.html',locals())
+
+@login_required
+def rprofile(request, id):
+	user_obj = SnetUser.objects.get(pk=id)
+	form = UserUpdateForm(instance=user_obj)
+
+	return render(request, 'users/rprofile.html', locals())

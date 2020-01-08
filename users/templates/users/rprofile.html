@@ -1,0 +1,23 @@
+{% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+<!-- <img class="background" src="{{user.profile.profile_img.url}}"> -->
+<div class="container shadow-lg bg-light w-25 mt-2 p-2 mx-auto border rounded">
+	<div class="row mx-auto">
+		<div class="col-md-3" >
+			<img width=100 height=100 class="img-thumbnail border rounded-circle" src="{{user_obj.profile.profile_img.url}}">
+		</div>
+		<div class="col-md-8 pl-0">
+			<span>{{user_obj.first_name}} {{user_obj.last_name}} | Profile </span>
+			<span class="small">{{user_obj.email}}</span>
+		</div>
+	</div>
+	<form class="p-3">
+		<fieldset disabled="disabled">
+		{% csrf_token %}
+		{{form|crispy}}
+		</fieldset>
+	</form>
+	
+</div>
+{% endblock %}

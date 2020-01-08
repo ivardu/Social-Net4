@@ -17,25 +17,82 @@
 	<div class="container mx-auto mt-2  w-50">
 		{% for post in feed_list %}
 		<!-- Individual Feed Container -->
-		<div class="container shadow-lg mt-2 p-2 rounded">
-			<div class="row">
-				<div class="col-md-3">
-					<img class="img-thumbnail border rounded-circle" src="{{post.user.profile.profile_img.url}}" width="100" height="100">
-				</div>
-				<div class="col-md-3 pt-3">
-					<div class="row">
-						<span>{{post.user.first_name}} {{post.user.last_name}}</span>
-					</div>
-					<div class="row">
-						<span class="small">{{post.date}}</span>
-					</div>
-				</div>
+		<div class="row shadow-lg mt-2 p-2 rounded">
+			<!-- Left Bar Image -->
+			<!-- Profile Image of the post -->
+			<div class="col-md-2">
+				<img class="img-thumbnail border rounded-circle" src="{{post.user.profile.profile_img.url}}" width="75" height="75">
 			</div>
-			<div class="container">
-				{{post.post}}
-			</div>
-			<div class="container">
-				<img class="img-thumbnail" src="{{post.image.url}}">
+			<!-- Right Bar Content -->
+			<!-- Profile Name of the Post  
+				 Post Date
+				-->
+			<div class="col-md-10">
+				<div class="row mb-2">
+					<div class="col-md-5 pt-1">
+						<div class="row">
+							{% if user == post.user %}
+								<h6 class="small pt-1 "><a href="{% url 'profile' %}">{{post.user.first_name}} {{post.user.last_name}}</a><h6>
+							{% else %}
+								<h6 class="small pt-1 ">
+								<a href="{% url 'rprofile' post.user_id %}">{{post.user.first_name}} {{post.user.last_name}}</a></h6>
+							{% endif %}
+						</div>
+						<div class="row">
+							<span class="small">{{post.date}}</span>
+						</div>
+					</div>
+				</div>
+				<!-- Post Context -->
+				<div class="row p-2">
+					<small>
+					{{post.post}}
+					</small>
+				</div>
+				<!-- feed post image -->
+				<div class="row">
+					<img class="img-thumbnail" src="{{post.image.url}}">
+				</div>
+				<!-- Like section -->
+				<div class="row">
+					<form method="post">
+						{% csrf_token %}
+						<div class="container pl-0">
+							<input type="hidden" name="post_id" value="{{post.id}}">
+							<input type="hidden" name="likes" value=1>
+							<input class="btn btn-link pl-0 pr-0" type="submit" name="likes" value="like">
+							<small>{{post.likes_set.all.count}}</small>
+						</div>
+					</form>
+				</div>
+				<!-- Comment Section -->
+				<div class="row">
+					<form class="w-100" method="post">
+						{% csrf_token %}
+						<div class="col-md-9 pl-0 mb-0 input-group">
+							{{comments_form}}
+							<div class="col-md-3 pl-0 input-group-append">
+								<input type="hidden" name="post_id" value="{{post.id}}">
+								<button class="btn btn-sm btn-success" type="submit">comment
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="row">
+					{% for comment in post.comments_set.all %}
+					<div class="container bg-light pl-0 pr-0">
+						{% if user == comment.user %}
+							<h6 class="small pt-1 "><a href="{% url 'profile' %}">{{comment.user.username}}</a><span> {{comment.comments}}</span></h6>
+							<hr class="p-0 m-0">
+						{% else %}
+							<h6 class="small pt-1 ">
+								<a href="{% url 'rprofile' comment.user.id %}">{{comment.user.username}}</a><span> {{comment.comments}}</span></h6>
+							<hr class="p-0 m-0">
+						{% endif %}
+					</div>
+					{% endfor %}
+				</div>
 			</div>
 		</div>
 		{% endfor %}

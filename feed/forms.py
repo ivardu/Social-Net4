@@ -1,4 +1,4 @@
-from feed.models import Feed
+from feed.models import Feed, Likes, Comments
 from django import forms
 
 class FeedForm(forms.ModelForm):
@@ -8,3 +8,15 @@ class FeedForm(forms.ModelForm):
 	class Meta:
 		model = Feed
 		fields = ['post','image']
+
+class LikeForm(forms.ModelForm):
+
+	class Meta:
+		model = Likes
+		fields = ['likes']
+
+class CommentForm(forms.ModelForm):
+	comments = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder':'Your comment..!!','class':'small form-control'}))
+	class Meta:
+		model = Comments
+		fields = ['comments']
