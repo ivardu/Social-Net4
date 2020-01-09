@@ -19,9 +19,13 @@
 			<div class="navbar navbar-dark bg-dark pb-0 pt-0">
 				<!-- Left Nav Bar  -->
 				<div class="navbar navbar-brand">
-					<a class="navbar-brand" href="{% url 'feed:home' %}"><h3>Social Net4</h3></a>
-					<a class="navbar-brand" href="{% url 'feed:home' %}"><h4 class="small">Home</h4></a>
-					<a class="navbar-brand" href="{% url 'feed:feed' %}"><h4 class="small">Feed</h4></a>
+					{% if user.is_authenticated %}
+						<a class="navbar-brand" href="{% url 'feed:feed' %}"><h3>Social Net4</h3></a>
+						<a class="navbar-brand" href="{% url 'feed:feed' %}"><h4 class="small">Feed</h4></a>
+						<a class="navbar-brand" href="{% url 'feed:myposts' user.id %}"><h4 class="small">My Posts</h4></a>
+					{% else %}
+						<a class="navbar-brand" href="{% url 'feed:home' %}"><h3>Social Net4</h3></a>
+					{% endif %}
 				</div>
 				<!-- Middle -->
 				<div></div>

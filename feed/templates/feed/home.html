@@ -1,6 +1,60 @@
-{% extends 'users/base.html'%}
+{% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
 {% block body %}
-<div class="container shadow-lg mt-2 p-3">
-	<h3>Welcome to the home page</h3>
+<!-- Feed Page body -->
+<div class="container mx-auto">
+	<!-- Feed List display Container-->
+	<div class="container mx-auto mt-2  w-50">
+		{% for post in feed_list %}
+		<!-- Individual Feed Container -->
+		<div class="row shadow-lg mt-2 p-2 rounded">
+			<!-- Left Bar Image -->
+			<!-- Profile Image of the post -->
+			<div class="col-md-2">
+				<img class="img-thumbnail border rounded-circle" src="{{post.user.profile.profile_img.url}}" width="75" height="75">
+			</div>
+			<!-- Right Bar Content -->
+			<!-- Profile Name of the Post  
+				 Post Date
+				-->
+			<div class="col-md-10">
+				<div class="row mb-2">
+					<div class="col-md-5 pt-1">
+						<div class="row">
+							{% if user == post.user %}
+								<h6 class="small pt-1 "><a href="{% url 'profile' %}">{{post.user.first_name}} {{post.user.last_name}}</a><h6>
+							{% else %}
+								<h6 class="small pt-1 ">
+								<a href="{% url 'rprofile' post.user_id %}">{{post.user.first_name}} {{post.user.last_name}}</a></h6>
+							{% endif %}
+						</div>
+						<div class="row">
+							<span class="small">{{post.date}}</span>
+						</div>
+					</div>
+				</div>
+				<!-- Post Context -->
+				<div class="row p-2">
+					<small>
+					{{post.post}}
+					</small>
+				</div>
+				<!-- feed post image -->
+				<div class="row">
+					<img class="img-thumbnail" src="{{post.image.url}}">
+				</div>
+				<!-- Like section -->
+				<div class="row">
+					<div class="col-md-2">
+					<a class="small" href="{% url 'login' %}">Like</a>
+					</div>
+					<div class="col-md-2">
+					<a class="small" href="{% url 'login' %}">Comment</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
 </div>
 {% endblock %}

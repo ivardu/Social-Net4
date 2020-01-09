@@ -15,7 +15,7 @@
 	</div>
 	<!-- Feed List display Container-->
 	<div class="container mx-auto mt-2  w-50">
-		{% for post in feed_list %}
+		{% for post in pages %}
 		<!-- Individual Feed Container -->
 		<div class="row shadow-lg mt-2 p-2 rounded">
 			<!-- Left Bar Image -->
@@ -42,6 +42,10 @@
 							<span class="small">{{post.date}}</span>
 						</div>
 					</div>
+					<div class="col-md-7">
+						<a href="{% url 'feed:edit' post.id %}">Edit</a>
+						
+					</div>
 				</div>
 				<!-- Post Context -->
 				<div class="row p-2">
@@ -60,8 +64,11 @@
 						<div class="container pl-0">
 							<input type="hidden" name="post_id" value="{{post.id}}">
 							<input type="hidden" name="likes" value=1>
-							<input class="btn btn-link pl-0 pr-0" type="submit" name="likes" value="like">
-							<small>{{post.likes_set.all.count}}</small>
+							<input class="btn btn-link pl-0 pr-0" type="submit" name="like" value="like">
+							<small>({{post.likes_set.all.count}})</small>
+							{% for item in post.likes_set.all %}
+								<small>{{item.user.username}} liked</small> 
+							{% endfor %}
 						</div>
 					</form>
 				</div>
@@ -80,10 +87,11 @@
 					</form>
 				</div>
 				<div class="row">
+					<!-- Comment List -->
 					{% for comment in post.comments_set.all %}
 					<div class="container bg-light pl-0 pr-0">
 						{% if user == comment.user %}
-							<h6 class="small pt-1 "><a href="{% url 'profile' %}">{{comment.user.username}}</a><span> {{comment.comments}}</span></h6>
+							<h6 class="small pt-1 pl-1 "><a href="{% url 'profile' %}">{{comment.user.username}}</a><span> {{comment.comments}}</span></h6>
 							<hr class="p-0 m-0">
 						{% else %}
 							<h6 class="small pt-1 ">
@@ -96,6 +104,23 @@
 			</div>
 		</div>
 		{% endfor %}
+		<div class="container p-3 w-75 mx-auto">
+			{% if pages.has_previous %}
+				<a class="btn btn-outline-info" href="?page=1">First</a>
+				<a class="btn btn-outline-info" href="{{pages.previous_page_number}}">Prev</a>
+			{% endif %}
+			{% for num in pages.paginator.page_range %}
+				{% if num == pages.number %}
+					<a class="btn btn-info" href="?page={{num}}">{{num}}</a>
+				{% elif num > pages.number|add:'-3' and num < pages.number|add:'3' %}
+					<a class="btn btn-outline-info" href="?page={{num}}">{{num}}</a>
+				{% endif %}
+			{% endfor %}
+			{%if pages.has_next %}
+				<a class="btn btn-outline-info" href="?page={{pages.next_page_number}}">Next</a>
+				<a class="btn btn-outline-info" href="?page={{pages.paginator.num_pages}}">Last</a>
+			{% endif %}
+		</div>
 	</div>
 </div>
 {% endblock %}

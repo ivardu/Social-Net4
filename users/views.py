@@ -5,6 +5,7 @@ from users.models import SnetUser
 from django.views.generic.edit import FormView, CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 
