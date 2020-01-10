@@ -14,6 +14,9 @@ class HomeView(ListView):
 	template_name = 'feed/home.html'
 	model = Feed
 
+	def get_queryset(self):
+		return Feed.objects.all()[:1]
+
 # This view is for the Feed page which will display the feed form, like and comment
 @login_required
 def feedlist(request):
@@ -80,6 +83,7 @@ def feedlist(request):
 class MyPostsList(ListView):
 	model = Feed
 	template_name = 'feed/myposts.html'
+	paginate_by = 3
 	# context_ob
 
 	def get_queryset(self):

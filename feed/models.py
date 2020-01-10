@@ -27,6 +27,9 @@ class Feed(models.Model):
 			img.thumbnail(output)
 			img.save(self.image.path)
 
+	def get_absolute_url(self):
+		return f"/myposts/{self.user.id}/"
+
 
 class Likes(models.Model):
 	feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
