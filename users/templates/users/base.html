@@ -30,16 +30,23 @@
 				<!-- Middle -->
 				<div></div>
 				<!-- Right Nav Bar -->
-				<div class="nav navbar-nav navbar-right">
 					{% if user.is_authenticated %}
 						<div class="row">
 							<div class="col-md-3 pr-0">
-								<a href="{% url 'profile' %}"><img class="img-thumbnail border rounded-circle" src="{{user.profile.profile_img.url}}" width="45" height="45"></a>
+								<a href="{% url 'profile' %}"><img class="img-thumbnail border rounded-circle" src="{{user.profile.profile_img.url}}" width="35" height="35"></a>
 							</div>
-							<div class="col-md-3 mt-1">
-								<a class="text-white small" href="{% url 'profile' %}">{{user.first_name}}</a>
+							<div class="col-md-3 mx-auto pl-0">
+								<a class="dropdown-toggle pt-0 pb-0 mr-1 text-white navbar-brand" id="dropdownMenuLink" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false" href="#">
+									<small>
+										{{user.first_name|title}}
+									</small>
+								</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+		  							<a class="dropdown-item bg-light pr-0 pl-2" href="{% url 'profile' %}">{{user.first_name}} | Profile</a>
+		  							<a class="dropdown-item bg-light text-dark pr-0 pl-2" href="{% url 'pchange' %}">Password Change</a>
+	  							</div>
 							</div>
-							<div class="col-md-3 mt-1">
+							<div class="col-md-5 mx-auto mt-1">
 								<a class="btn btn-sm btn-danger" href="{% url 'logout' %}">Logout</a>
 							</div>
 						</div>
@@ -53,8 +60,6 @@
 						</div>
 					</div>
 					{% endif %}
-				</div>
-				
 			</div>
 			
 		</div>

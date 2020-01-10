@@ -1,6 +1,6 @@
 from django.shortcuts import render, reverse
 from django.http import HttpResponseRedirect
-from users.forms import UserUpdateForm, UserRegForm, ProfileForm
+from users.forms import UserUpdateForm, UserRegForm, ProfileForm, FriendsForm
 from users.models import SnetUser
 from django.views.generic.edit import FormView, CreateView
 from django.urls import reverse_lazy
@@ -31,6 +31,7 @@ def profile(request):
 	else:
 		pform = ProfileForm(instance=request.user.profile)
 		uform = UserUpdateForm(instance=request.user)
+		
 
 	return render(request, 'users/profile.html',locals())
 
@@ -38,5 +39,6 @@ def profile(request):
 def rprofile(request, id):
 	user_obj = SnetUser.objects.get(pk=id)
 	form = UserUpdateForm(instance=user_obj)
+	fform = FriendsForm(instance=request.user)
 
 	return render(request, 'users/rprofile.html', locals())

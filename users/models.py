@@ -40,3 +40,9 @@ class Profile(models.Model):
 			output = (200,200)
 			img.thumbnail(output)
 			img.save(self.profile_img.path)
+
+
+class Friends(models.Model):
+	friends = models.CharField(default='No', max_length=3)
+	friend_req_sent = models.CharField(default='No', max_length=3)
+	user = models.ForeignKey(SnetUser, null=True, on_delete=models.SET_NULL)

@@ -1,4 +1,5 @@
 {% extends 'users/base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
 {% block body %}
 <!-- Feed Page body -->
@@ -31,6 +32,10 @@
 						<div class="row">
 							<span class="small">{{post.date}}</span>
 						</div>
+					</div>
+					<!-- Post Edit -->
+					<div class="col-md-7" align="Right">
+						<a href="{% url 'feed:edit' post.id %}"><img src="{% static 'components/edit.jpg/' %}" width="15" height="15"></a>
 					</div>
 				</div>
 				<!-- Post Context -->
