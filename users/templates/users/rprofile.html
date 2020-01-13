@@ -21,8 +21,30 @@
 </div>
 <div class="container shadow-lg bg-light w-25 mt-2 p-2 mx-auto border rounded">
 	<form method="post">
-		{{fform|crispy}}
-		<input type="submit" name="">
+		{% csrf_token %}
+		{% if accepted.friends == 'yes' %}
+				<div class="mx-auto w-75">
+				<small class="h5 text-muted">{{user_obj.first_name|title}} and You are <button class="btn btn-success ">Friends</button></small>
+				</div>
+		{% elif sent == 'yes' %}
+				<button class="btn btn-info">Not Friends</button>
+				{% if auser and ruser %}
+				<button class="btn btn-success"><a class="btn btn-sm text-white p-0" href="{% url 'profile' %}">Accept</a></button>
+				{% elif ruser %}
+				<button class="btn btn-success"><a class="btn btn-sm text-white p-0" href="{% url 'profile' %}">Accept</a></button>
+				{% elif auser %}
+				<button class="btn btn-success">Friend Request Sent to {{auser.first_name}}</button>
+				{% endif %}
+		{% else %}
+			<div class="mx-auto w-75 p-1">
+				{% for item in frform %}
+					<input type="hidden" name="{{item.value}}">
+				{% endfor %}
+				<button class="btn btn-info">Not Friends</button>
+				<input type="hidden" name="friend_req_sent" value="yes">
+				<input class="btn btn-outline-success" type="submit" name="submit" value="Send Request">
+			</div>
+		{% endif %}
 	</form>
 	
 </div>

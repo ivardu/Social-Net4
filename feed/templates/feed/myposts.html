@@ -91,6 +91,7 @@
 			</div>
 		</div>
 		{% endfor %}
+		<!--  Pagination container -->
 		<div class="container p-3 w-75 mx-auto">
 		{% if is_paginated %}
 			{% if page_obj.has_previous %}
@@ -105,8 +106,8 @@
 				{% endif %}
 			{% endfor %}
 			{%if page_obj.has_next %}
-				<a class="btn btn-outline-info" href="?page={{pages.next_page_number}}">Next</a>
-				<a class="btn btn-outline-info" href="?page={{pages.paginator.num_pages}}">Last</a>
+				<a class="btn btn-outline-info" href="?page={{page_obj.next_page_number}}">Next</a>
+				<a class="btn btn-outline-info" href="?page={{page_obj.paginator.num_pages}}">Last</a>
 			{% endif %}
 		{% endif %}
 		</div>

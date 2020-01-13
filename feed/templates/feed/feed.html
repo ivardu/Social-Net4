@@ -41,6 +41,7 @@
 						</div>
 						<div class="row">
 							<span class="small">{{post.date}}</span>
+							<span class="small">{{date}}</span>
 						</div>
 					</div>
 					<!-- Post Edit -->
@@ -69,9 +70,15 @@
 							<input type="hidden" name="likes" value=1>
 							<input class="btn btn-link pl-0 pr-0" type="submit" name="like" value="like">
 							<small>({{post.likes_set.all.count}})</small>
-							{% for item in post.likes_set.all %}
-								<small>{{item.user.username}} liked</small> 
-							{% endfor %}
+							{% if post.likes_set.all.count > 1 %}
+
+							<!-- Not a BEST PRACTICE  -->
+							<!-- Query in the template  -->
+
+								{% for liked_user in post.likes_set.all|dictsortreversed:'user_id'|slice:'1'%}
+								<small>{{liked_user.user.first_name}} and others liked</small> 
+								{% endfor %}
+							{% endif %}
 						</div>
 					</form>
 				</div>
@@ -110,7 +117,7 @@
 		<div class="container p-3 w-75 mx-auto">
 			{% if pages.has_previous %}
 				<a class="btn btn-outline-info" href="?page=1">First</a>
-				<a class="btn btn-outline-info" href="{{pages.previous_page_number}}">Prev</a>
+				<a class="btn btn-outline-info" href="?page={{pages.previous_page_number}}">Prev</a>
 			{% endif %}
 			{% for num in pages.paginator.page_range %}
 				{% if num == pages.number %}

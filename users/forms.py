@@ -1,6 +1,9 @@
-from users.models import SnetUser, Profile, Friends
+from users.models import SnetUser, Profile , Friends
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from functools import partial 
+
+DateInput = partial(forms.DateInput, {'class':'datepicker'})
 
 class UserRegForm(UserCreationForm):
 	# username = forms.CharField(label='username', widget=forms.)
@@ -12,7 +15,10 @@ class UserRegForm(UserCreationForm):
 	email = forms.CharField(label='Email', widget=forms.EmailInput())
 	password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
 	password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
-	dob = forms.DateField(input_formats=['%d/%m/%Y'])
+	dob = forms.DateField(input_formats=['%d/%m/%Y'], widget=forms.TextInput(attrs={
+			'type':'date', 'class':'datepicker', 'id':'datepicker'
+		}))
+	# input_formats=['%d/%m/%Y'],
 	first_name= forms.CharField(required=True)
 	last_name = forms.CharField(required=True)
 	gender = forms.ChoiceField(choices=GENDER_CHOICES)
@@ -34,9 +40,11 @@ class ProfileForm(forms.ModelForm):
 		fields = ['profile_img']
 
 class UserUpdateForm(forms.ModelForm):
+	dob = forms.DateField(input_formats=['%d/%m/%Y'])
 
 	class Meta:
 		model = SnetUser
+		widgets= {'dob':DateInput(),}
 		fields = ['first_name','last_name','email','dob']
 
 # class PasswordUpdateForm(forms.models)
@@ -48,7 +56,7 @@ class FriendReqForm(forms.ModelForm):
 		model = Friends
 		fields = ['friend_req_sent']
 
-class FriendsForm(forms.ModelForm):
-	class Meta:
-		model = Friends
-		fields = ['friends']
+# class FriendsForm(forms.ModelForm):
+# 	class Meta:
+# 		model = Friends
+# 		fields = ['friends']

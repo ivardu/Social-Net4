@@ -1,9 +1,13 @@
 {% extends 'users/base.html' %}
 {% load crispy_forms_tags %}
+{% block friends %}
+
+{% endblock friends %}
 {% block body %}
 <!-- <img class="background" src="{{user.profile.profile_img.url}}"> -->
-<div class="container shadow-lg bg-light w-25 mt-2 p-2 mx-auto border rounded">
-	<div class="row mx-auto">
+<div class="row container mx-auto">
+<div class="col-lg-6 container shadow-lg bg-light w-25 mt-2 p-2 mx-auto border rounded">
+	<div class="row">
 		<div class="col-md-3" >
 			<img width=100 height=100 class="img-thumbnail border rounded-circle" src="{{user.profile.profile_img.url}}">
 		</div>
@@ -21,6 +25,31 @@
 			<input class="btn btn-success" type="submit" name="update" value="Update">
 		</div>
 	</form>
+</div>
+<div class="col-md-5">
+			
+	<div class="container w-75 shadow-lg bg-light mt-2 p-4 border rounded">
+			<h4 class="mx-auto">Friend Requests ({{count}})</h4>
+			<hr class="p-0 m-1">
+				{% for item in frn_req_list %}
+				<form method="post" action="{% url 'accept' %}">
+					{% csrf_token %}
+					<input type="hidden" name="friends" value="yes">
+					<input type="hidden" name="item" value="{{item.id}}">
+					<input class="btn btn-sm btn-success" type="submit" name="accept" value="Accept"><a href="{% url 'rprofile' item.id %}">{{item.first_name}} {{item.last_name}}</a>
+
+				</form>
+					<hr class="p-0 m-1">
+				{% endfor %}
+		</div>
+	</div>
 	
 </div>
+<script>
+	$(document).ready(function() {
+		$(".datepicker").datepicker();
+	});
+</script>
+</div>
+
 {% endblock %}

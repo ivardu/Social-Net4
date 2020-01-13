@@ -4,6 +4,7 @@ from django.views.generic import ListView
 from django.views.generic.edit import UpdateView
 from feed.models import Feed
 from feed.forms import FeedForm, CommentForm, LikeForm
+from users.models import Friends
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 # Create your views here.
@@ -21,6 +22,7 @@ class HomeView(ListView):
 @login_required
 def feedlist(request):
 	# Feed objects all list 
+	# friends = Friends.objects.
 	feed_list = Feed.objects.all()
 	paginator = Paginator(feed_list, 5)
 	
@@ -73,7 +75,11 @@ def feedlist(request):
 	else:
 		feed_form = FeedForm()
 		likes_form = LikeForm()
+		# Bring the best practice for using the list of likes in the template
+		# likes list
+		# liked_user = Feed.
 		comments_form = CommentForm()
+
 
 	return render(request, 'feed/feed.html', locals())
 

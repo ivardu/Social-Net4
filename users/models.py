@@ -42,7 +42,13 @@ class Profile(models.Model):
 			img.save(self.profile_img.path)
 
 
+
 class Friends(models.Model):
 	friends = models.CharField(default='No', max_length=3)
 	friend_req_sent = models.CharField(default='No', max_length=3)
-	user = models.ForeignKey(SnetUser, null=True, on_delete=models.SET_NULL)
+	ruser = models.ForeignKey(SnetUser, on_delete=models.CASCADE)
+	auser_id = models.IntegerField(null=True)
+	mtom = models.ManyToManyField('self')
+
+	def __str__(self):
+		return self.ruser

@@ -29,6 +29,7 @@ urlpatterns = [
     path('signup/',user_views.UserRegView.as_view(), name='signup'),
     path('profile/',user_views.profile, name='profile'),
     path('rprofile/<int:id>/',user_views.rprofile, name='rprofile'),
+    path('accept/',user_views.friend_req, name='accept'),
     path('pchange/',
         PasswordChangeView.as_view(template_name='users/pchange.html'), 
         name='pchange'),
